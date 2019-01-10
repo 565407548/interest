@@ -52,7 +52,5 @@ public interface UserService {
 	 */
 	public void deleteUsers(List<String> groupId);
 
-	public void updateUsertype(UserEntity userEntity);
-
     UserEntity getEntityById(int userid);
 }

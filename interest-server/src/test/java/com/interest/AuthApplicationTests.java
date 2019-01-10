@@ -1,12 +1,9 @@
 package com.interest;
 
-import com.interest.dao.PostCardDao;
 import com.interest.dao.UserDao;
 import com.interest.dao.UserGithubDao;
-import com.interest.model.PostCardEntity;
 import com.interest.model.UserEntity;
 import com.interest.model.UserGithubEntity;
-import net.bytebuddy.asm.Advice;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -24,9 +21,6 @@ public class AuthApplicationTests {
 
 	@Autowired
 	private RedisTemplate redisTemplate;
-
-	@Autowired
-	private PostCardDao postCardDao;
 
 	@Autowired
 	private UserDao userDao;

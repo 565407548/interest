@@ -1,4 +1,4 @@
-package com.interest.controller.sys;
+package com.interest.controller;
 
 import com.interest.model.PageResult;
 import com.interest.model.UserEntity;
@@ -83,12 +83,12 @@ public class UserController {
 		return userEntity;
 	}
 
-	@PutMapping("/users/user")
-	public UserEntity updateUsertype(@RequestBody UserEntity userEntity) {
-		userService.updateUsertype(userEntity);
-		log.debug("The method is ending");
-		return userEntity;
-	}
+//	@PutMapping("/users/user")
+//	public UserEntity updateUsertype(@RequestBody UserEntity userEntity) {
+//		userService.updateUsertype(userEntity);
+//		log.debug("The method is ending");
+//		return userEntity;
+//	}
 	
 	/**
 	 * 删除用户信息

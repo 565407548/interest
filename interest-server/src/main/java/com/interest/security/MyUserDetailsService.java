@@ -26,7 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
     UserDao userDao;
 	
 	@Autowired
-    RoleDao roleDao;
+	RoleDao roleDao;
 
 	private final static String DEFAULT_PASSWORD = "interest";
 	

@@ -10,21 +10,21 @@
 	</resultMap>
 	<!-- 获取role列表 -->
 	<select id="rolesList" resultMap="roleMap">
-	<![CDATA[select * from sys_role]]>
-	    <![CDATA[ order by id ]]>
+		<![CDATA[select * from sys_role]]>
+		<![CDATA[ order by id ]]>
 		<if test="pageSize != null and start != null ">
 			limit #{start},#{pageSize}
 		</if>
 	</select>
 	<!-- 获取role列表的总量 -->
-	<select id="rolesSize" resultType="Integer">  
+	<select id="rolesSize" resultType="Integer">
 	    <![CDATA[select count(*) from sys_role]]>
 	</select>
 	<!-- 新建角色信息 -->
 	<insert id="insertRole">
 		insert into sys_role (role,name,modules,`describe`)
 		values
-		(#{roleEntity.role},#{roleEntity.name},#{roleEntity.modules},#{roleEntity.describe})
+			   (#{roleEntity.role},#{roleEntity.name},#{roleEntity.modules},#{roleEntity.describe})
 	</insert>
 	<!-- 更新角色信息 -->
 	<update id="updateRole">
@@ -46,7 +46,7 @@
 			<if test="groupId !=null">
 				id in
 				<foreach collection="groupId" item="item" index="index"
-					open="(" separator="," close=")">
+						 open="(" separator="," close=")">
 					#{item}
 				</foreach>
 			</if>
@@ -55,14 +55,14 @@
 	<!-- 通过id得到Modules集合 -->
 	<select id="getModulesById" resultType="String">
 		select modules from
-		sys_role where id in (select role_id from r_user_role where user_id =
-		#{id})
+							sys_role where id in (select role_id from r_user_role where user_id =
+																						#{id})
 	</select>
 	<!-- 通过UserId得到对应的role -->
 	<select id="getRolesByUserId" resultType="String">
 		select `role` from
-		sys_role where id in (select role_id from r_user_role where user_id =
-		#{id})
+						   sys_role where id in (select role_id from r_user_role where user_id =
+																					   #{id})
 	</select>
 	<!-- 得到角色全部数据 -->
 	<select id="allRoles" resultMap="roleMap">

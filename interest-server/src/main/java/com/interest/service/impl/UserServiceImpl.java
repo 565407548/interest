@@ -3,9 +3,7 @@ package com.interest.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.interest.dao.RelationDao;
 import com.interest.dao.UserDao;
-import com.interest.model.RelationEntity;
 import com.interest.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,9 +17,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private RelationDao relationDao;
 	
 	@Override
 	public void insert(UserEntity userEntity) {
@@ -74,23 +69,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUsers(List<String> groupId) {
 		userDao.deleteUsers(groupId);
-	}
-
-	@Override
-	@Transactional
-	public void updateUsertype(UserEntity userEntity) {
-		if(userEntity.getUsertype() == 0) {
-			relationDao.delById(userEntity.getId());
-		}else if(userEntity.getUsertype() == 1) {
-			RelationEntity relationEntity = new RelationEntity();
-			relationEntity.setUserId(userEntity.getId());
-			relationEntity.setRoleId(1);
-			List<RelationEntity> list = new ArrayList<RelationEntity>();
-			list.add(relationEntity);
-			relationDao.insertRelations(list);
-		}
-		//userDao.updateUsertype(userEntity.getLoginName(),userEntity.getUsertype());
-		userDao.updateUsertypeById(userEntity.getId(),userEntity.getUsertype());
 	}
 
 	@Override
