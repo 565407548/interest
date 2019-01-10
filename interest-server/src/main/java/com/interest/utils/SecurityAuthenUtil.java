@@ -11,20 +11,19 @@ public class SecurityAuthenUtil {
 	 * @return
 	 */
 	public static int getId() {
-		Authentication authenObj = SecurityContextHolder.getContext().getAuthentication();
-		User authenUser = (User)authenObj.getPrincipal();
-		return Integer.valueOf(authenUser.getUsername());
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User)authentication.getPrincipal();
+		return Integer.valueOf(user.getUsername());
 	}
 
 	public static int getIdWithoutException() {
 		try {
-			Authentication authenObj = SecurityContextHolder.getContext().getAuthentication();
-			User authenUser = (User)authenObj.getPrincipal();
-			return Integer.valueOf(authenUser.getUsername());
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			User user = (User)authentication.getPrincipal();
+			return Integer.valueOf(user.getUsername());
 		}catch (Exception ex){
 			return 0;
 		}
-
 	}
 
 	/**
@@ -32,9 +31,9 @@ public class SecurityAuthenUtil {
 	 * @return
 	 */
 	public static String getLoginName() {
-		Authentication authenObj = SecurityContextHolder.getContext().getAuthentication();
-		User authenUser = (User)authenObj.getPrincipal();
-		return authenUser.getUsername();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User)authentication.getPrincipal();
+		return user.getUsername();
 	}
 	
 	/**
@@ -42,9 +41,9 @@ public class SecurityAuthenUtil {
 	 * @return
 	 */
 	public static User getAuthenticationUser() {
-		Authentication authenObj = SecurityContextHolder.getContext().getAuthentication();
-		User authenUser = (User)authenObj.getPrincipal();
-		return authenUser;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User)authentication.getPrincipal();
+		return user;
 	}
 	
 

@@ -32,7 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		UserEntity userEntity = null;
+		UserEntity userEntity;
 
 		if(MyStringUtil.isInteger(id)) {
 			userEntity = userDao.getUserEntityById(Integer.valueOf(id));

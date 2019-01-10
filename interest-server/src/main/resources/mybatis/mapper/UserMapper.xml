@@ -78,9 +78,9 @@
 				   order="AFTER">
 			select LAST_INSERT_ID()
 		</selectKey>
-		insert into sys_user (name,email,usertype,headimg,url,create_time,githubid)
+		insert into sys_user (name,login_name,password,email,usertype,headimg,url,create_time,githubid)
 		values
-		(#{name},#{email},#{usertype},#{headimg},#{url},#{createTime},#{githubid})
+		(#{name},#{loginName},#{password},#{email},#{usertype},#{headimg},#{url},#{createTime},#{githubid})
 	</insert>
 	<!-- 更新用户信息 -->
 	<update id="updateUser" parameterType="UserEntity">

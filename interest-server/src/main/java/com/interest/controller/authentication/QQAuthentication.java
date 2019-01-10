@@ -1,13 +1,10 @@
 package com.interest.controller.authentication;
 
-import com.interest.controller.login.LoginFailureExcepiton;
+import com.interest.controller.login.LoginFailureException;
 import com.interest.dao.UserDao;
 import com.interest.model.UserEntity;
-import com.interest.model.UserGithubEntity;
 import com.interest.model.UserQQEntity;
-import com.interest.properties.GithubProperties;
 import com.interest.properties.QQProperties;
-import com.interest.service.UserGithubService;
 import com.interest.service.UserQQService;
 import com.interest.utils.DateUtil;
 import org.slf4j.Logger;
@@ -18,8 +15,6 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -39,7 +34,7 @@ public class QQAuthentication implements MyAuthentication {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    private static final String QQ_ACCESSS_TOKEN_URL = "https://graph.qq.com/oauth2.0/token";
+    private static final String QQ_ACCESS_TOKEN_URL = "https://graph.qq.com/oauth2.0/token";
 
     private static final String QQ_OPENID_URL = "https://graph.qq.com/oauth2.0/me";
 
@@ -55,7 +50,7 @@ public class QQAuthentication implements MyAuthentication {
         logger.info("**********appid:"+appid+";appkey:"+appkey+"**********");
 
         /* 获取access_token */
-        String tokenUrl = QQ_ACCESSS_TOKEN_URL+"?grant_type=authorization_code&client_id="+appid+
+        String tokenUrl = QQ_ACCESS_TOKEN_URL +"?grant_type=authorization_code&client_id="+appid+
                 "&client_secret="+appkey+"&code="+code+"&redirect_uri=http://www.lovemtt.com/qq";
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(tokenUrl, String.class);
         String message = responseEntity.getBody().trim();
@@ -67,13 +62,13 @@ public class QQAuthentication implements MyAuthentication {
         message = responseEntity.getBody().trim();
         message = message.split("\\(")[1].split("\\)")[0];
 
-        UserEntity userEntity = null;
+        UserEntity userEntity ;
 
         try {
             JSONObject callback = new JSONObject(message);
             String openid = callback.getString("openid");
             if (openid == null) {
-                throw new LoginFailureExcepiton(callback.toString());
+                throw new LoginFailureException(callback.toString());
             }
 
             userEntity = userDao.getEntityByQqid(openid);
@@ -113,13 +108,6 @@ public class QQAuthentication implements MyAuthentication {
         userQQEntity.setGender(qqUserInfo.getString("gender"));
         userQQEntity.setUserid(userEntity.getId());
         userQQService.insertEntity(userQQEntity);
-//        UserGithubEntity userGithubEntity = new UserGithubEntity();
-//        userGithubEntity.setLogin(githubToken.getString("login"));
-//        userGithubEntity.setAvatarUrl(githubToken.getString("avatar_url"));
-//        userGithubEntity.setHtmlUrl(githubToken.getString("html_url"));
-//        userGithubEntity.setEmail(githubToken.getString("email"));
-//        userGithubEntity.setUserid(userEntity.getId());
-//        userGithubService.insertEntity(userGithubEntity);
 
         return String.valueOf(userEntity.getId());
     }

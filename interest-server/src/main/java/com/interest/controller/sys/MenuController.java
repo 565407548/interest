@@ -30,18 +30,13 @@ public class MenuController {
 	@Resource(name = "menuServiceImpl")
 	private MenuService menuService;
 
-	@Autowired
-	private UserService userService;
-
 	/**
 	 * 获取该用户的菜单权限
 	 * @return
 	 */
 	@GetMapping("/manage/menu")
 	public List<MenuEntity> menuList() {
-//		UserEntity userEntity = userService.getUserEntityByLoginName(SecurityAuthenUtil.getLoginName());
-		List<MenuEntity> menuList = menuService.menuList(SecurityAuthenUtil.getId());
-		return menuList;
+		return  menuService.menuList(SecurityAuthenUtil.getId());
 	}
 
 	/**

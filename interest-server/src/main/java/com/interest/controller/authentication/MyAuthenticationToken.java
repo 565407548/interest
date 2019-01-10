@@ -10,13 +10,7 @@ public class MyAuthenticationToken extends AbstractAuthenticationToken {
 
 	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-	// ~ Instance fields
-	// ================================================================================================
-
 	private final Object principal;
-
-	// ~ Constructors
-	// ===================================================================================================
 
 	/**
 	 * This constructor can be safely used by any code that wishes to create a
@@ -43,20 +37,21 @@ public class MyAuthenticationToken extends AbstractAuthenticationToken {
 			Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
 		this.principal = principal;
-		super.setAuthenticated(true); // must use super, as we override
+		// must use super, as we override
+		super.setAuthenticated(true);
 	}
 
-	// ~ Methods
-	// ========================================================================================================
-
+	@Override
 	public Object getCredentials() {
 		return null;
 	}
 
+	@Override
 	public Object getPrincipal() {
 		return this.principal;
 	}
 
+	@Override
 	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 		if (isAuthenticated) {
 			throw new IllegalArgumentException(

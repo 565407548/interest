@@ -20,7 +20,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WhSpringBootApplicationTests {
+public class AuthApplicationTests {
 
 	@Autowired
 	private RedisTemplate redisTemplate;

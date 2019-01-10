@@ -25,12 +25,7 @@ public class ReplyCardController {
 		pageResult.setTotalCount(replyCardService.replycardSize(postcardid, pageSize, page * pageSize));
 		return pageResult;
 	}
-	
-//	@GetMapping("/replycards/replycard")
-//	public ReplyCardEntity preplyardGet(@RequestParam("id") int id) {
-//		return replyCardService.getReplycard(id);
-//	}
-//	
+
 	@PostMapping("/replycards/replycard")
 	public ReplyCardEntity insertEntity(@RequestBody ReplyCardEntity replyCardEntity ) {
 		replyCardService.insertEntity(replyCardEntity);

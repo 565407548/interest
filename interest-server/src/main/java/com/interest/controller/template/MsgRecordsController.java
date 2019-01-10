@@ -20,15 +20,15 @@ public class MsgRecordsController {
     }
 
     @GetMapping("/msgrecords/user")
-    public PageResult userMesRecordsGet(@RequestParam("pageSize") int pageSize, @RequestParam("page") int page){
+    public PageResult getUserMsgRecords(@RequestParam("pageSize") int pageSize, @RequestParam("page") int page){
         PageResult pageResult = msgRecordsService.getUserMegsResult(pageSize, page * pageSize);
         return pageResult;
     }
 
     @PutMapping("/msgrecords/read")
-    public ResponseWrapper<Integer> userReadMes(@RequestParam("msgRecordId")Integer msgRecordId){
+    public ResponseWrapper<Integer> updateMsgRecordReadStatus(@RequestParam("msgRecordId")Integer msgRecordId){
         msgRecordsService.updateMsgRecordIsread(msgRecordId,1);
-        return new ResponseWrapper<Integer>("200",msgRecordId);
+        return new ResponseWrapper<>("200",msgRecordId);
     }
 
 }

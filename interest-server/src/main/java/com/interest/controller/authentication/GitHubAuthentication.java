@@ -2,7 +2,7 @@ package com.interest.controller.authentication;
 
 import com.interest.dao.UserDao;
 import com.interest.model.UserEntity;
-import com.interest.controller.login.LoginFailureExcepiton;
+import com.interest.controller.login.LoginFailureException;
 import com.interest.model.UserGithubEntity;
 import com.interest.properties.GithubProperties;
 import com.interest.service.UserGithubService;
@@ -58,14 +58,14 @@ public class GitHubAuthentication implements MyAuthentication {
         String access_token = message.split("&")[0].split("=")[1];
 
         if(access_token == null || "".equals(access_token)){
-            throw new LoginFailureExcepiton(message);
+            throw new LoginFailureException(message);
         }
 
         String url = GITHUB_USER_URL + "?access_token=" + access_token;
 
         responseEntity = restTemplate.getForEntity(url, String.class);
 
-        UserEntity userEntity = null;
+        UserEntity userEntity;
 
         try {
 
@@ -74,7 +74,7 @@ public class GitHubAuthentication implements MyAuthentication {
             String login = githubUserInfo.getString("login");
 
             if (login == null) {
-                throw new LoginFailureExcepiton(githubUserInfo.toString());
+                throw new LoginFailureException(githubUserInfo.toString());
             }
 
             userEntity = userDao.getEntityByGithubid(login);
@@ -96,7 +96,7 @@ public class GitHubAuthentication implements MyAuthentication {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(githubToken.getString("email"));
         userEntity.setHeadimg(githubToken.getString("avatar_url"));
-//        userEntity.setLoginName(githubToken.getString("login"));
+        userEntity.setLoginName(githubToken.getString("login"));
         userEntity.setName(githubToken.getString("login"));
         userEntity.setUrl(githubToken.getString("html_url"));
         userEntity.setGithubid(githubToken.getString("login"));

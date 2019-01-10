@@ -1,7 +1,5 @@
 package com.interest.oauth2;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,50 +15,51 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableAuthorizationServer
 public class MyAuthorizationServerConfigurerAdapter extends AuthorizationServerConfigurerAdapter {
 
-	@Bean
-	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-		/*设置签名*/
-		accessTokenConverter.setSigningKey("smallsnail");
-		return accessTokenConverter;
-	}
-	
-	@Autowired
-	private AuthenticationManager authenticationManager;
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
+        /*设置签名*/
+        accessTokenConverter.setSigningKey("smallsnail");
+        return accessTokenConverter;
+    }
 
-	@Autowired
-	private RedisConnectionFactory redisConnection;
-	
-	@Autowired
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private RedisConnectionFactory redisConnection;
+
+    @Autowired
     private DataSource dataSource;
-	
-	@Bean 
+
+    @Bean
     public ClientDetailsService myClientDetailsService() {
         return new JdbcClientDetailsService(dataSource);
     }
 
-	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		super.configure(security);
-	}
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        super.configure(security);
+    }
 
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		/*jwt方式+redis存储token*/
-		endpoints.accessTokenConverter(jwtAccessTokenConverter());
-		endpoints.authenticationManager(authenticationManager).tokenStore(new RedisTokenStore(redisConnection));
-		/*普通*/
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        /*jwt方式+redis存储token*/
+        endpoints.accessTokenConverter(jwtAccessTokenConverter())
+                .authenticationManager(authenticationManager)
+                .tokenStore(new RedisTokenStore(redisConnection));
+        /*普通*/
 //		endpoints.authenticationManager(authenticationManager);
-	}
+    }
 
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.withClientDetails(myClientDetailsService());
-	}
-
-
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.withClientDetails(myClientDetailsService());
+    }
 }

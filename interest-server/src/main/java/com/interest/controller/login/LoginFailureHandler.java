@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class LoginFailureHandler {
 
-	@ExceptionHandler(LoginFailureExcepiton.class)
+	@ExceptionHandler(LoginFailureException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	public Map<String, Object> handleLoginFailureExcepiton(LoginFailureExcepiton ex) {
-		Map<String,Object> result = new HashMap<>();
+	public Map<String, Object> handleLoginFailureException(LoginFailureException ex) {
+		Map<String,Object> result = new HashMap<>(1);
 		result.put("message", ex.getMessage());
 		result.put("error type", "登陆失败");
 		return result;

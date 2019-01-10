@@ -26,10 +26,9 @@ public class EmailController {
 
 	@PostMapping("/email")
 	public EmailEntity insertEntity(@RequestBody EmailEntity emailEntity) {
-		int userid = SecurityAuthenUtil.getId();
+		int id = SecurityAuthenUtil.getId();
 
-//		emailEntity.setUsername(SecurityAuthenUtil.getLoginName());
-		emailEntity.setUserid(userid);
+		emailEntity.setUserid(id);
 		emailService.insertEntity(emailEntity);
 		return emailEntity;
 	}

@@ -9,17 +9,17 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableResourceServer
 public class MyResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.
-		authorizeRequests()
-		.antMatchers("/public/**").permitAll()
-		.antMatchers("/authentication/github","/authentication/qq").permitAll()
-		.antMatchers("/register").permitAll()
-		.antMatchers("/**/*.jpg","/**/*.png","/**/*.jpeg").permitAll()
-		.antMatchers("/users/**","/menus/**","/roles/**","/admin/**").hasRole("ADMIN")
-		.anyRequest()
-		.authenticated();
-	}
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/public/**").permitAll()
+                .antMatchers("/authentication/github", "/authentication/qq").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/**/*.jpg", "/**/*.png", "/**/*.jpeg").permitAll()
+                .antMatchers("/roles/**").permitAll()
+                .antMatchers("/users/**", "/menus/**", "/admin/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated();
+    }
 
 }
